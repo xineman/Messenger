@@ -3,8 +3,8 @@ const path = require('path');
 
 const config = {
   entry: {
-    main: './app/js/app.js',
-    libs: ['jquery', 'react', 'react-dom']
+    main: './app/js/index.js',
+    libs: ['react', 'react-dom', 'react-redux', 'redux']
   },
   output: {
     path: path.resolve(__dirname, 'app/js'),
@@ -21,7 +21,7 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery", "window.jQuery": "jquery", React: 'react', ReactDOM: 'react-dom'}),
+    new webpack.ProvidePlugin({React: 'react', ReactDOM: 'react-dom'}),
     new webpack.optimize.CommonsChunkPlugin({
       names: [
         "libs", "manifest"

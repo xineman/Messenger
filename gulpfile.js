@@ -30,12 +30,12 @@ gulp.task('concat-css',['sass'], function () {
     .pipe(gulp.dest('app/css'));
 });
 
-//Bundle scripts using webpack
-// gulp.task('webpack' ,function() {
-//   return gulp.src('app/js/app.js')
-//     .pipe(webpack( require('./webpack.config.js') ))
-//     .pipe(gulp.dest('app/js'));
-// });
+// Bundle scripts using webpack
+gulp.task('webpack' ,function() {
+  return gulp.src('app/js/index.js')
+    .pipe(webpack( require('./webpack.config.js'), webpack2 ))
+    .pipe(gulp.dest('app/js'));
+});
 
 //DEVELOPMENT
 gulp.task("watch",['concat-css'], ()=> {
@@ -53,7 +53,7 @@ gulp.task('build', ['clean', 'index', 'min-css', 'webpack-prod'], function() {
 
 //webpack with production config
 gulp.task('webpack-prod' ,function() {
-  return gulp.src('app/js/app.js')
+  return gulp.src('app/js/index.js')
     .pipe(webpack( require('./webpack-prod.config.js'), webpack2 ))
     .pipe(gulp.dest('dist/js'));
 });
