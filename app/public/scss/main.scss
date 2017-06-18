@@ -48,7 +48,8 @@ html, body, #root, .root-inner {
 
 .header__logout-link {
   font: 400 16px $roboto;
-  color: $light
+  color: $light;
+  cursor: pointer;
 }
 .main {
   flex: 1 1 auto;
@@ -56,13 +57,13 @@ html, body, #root, .root-inner {
   width: 100%;
   height: 100%;
 }
-.users {
+.dialogs {
   width: 250px;
   height: 100%;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
 }
 
-.users__item {
+.dialogs__item {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -78,19 +79,23 @@ html, body, #root, .root-inner {
     background: $secondary;
   }
 }
-
-.users__item-header {
+.dialogs__item_add {
+  font: 500 14px $roboto;
+  height:auto;
+  color: $light;
+}
+.dialogs__item-header {
   display: flex;
   justify-content: space-between;
 }
-.users__username {
+.dialogs__dialogname {
   font: 500 14px $roboto;
 }
-.users__time {
+.dialogs__time {
   font: 300 14px $roboto;
 
 }
-.users__message-preview {
+.dialogs__message-preview {
   font: 400 14px $roboto;
   overflow: hidden;
   white-space: nowrap;
@@ -145,6 +150,7 @@ html, body, #root, .root-inner {
 
 .btn {
   cursor: pointer;
+  dialog-select: none;
   display: block;
   text-align: center;
 }
@@ -275,5 +281,63 @@ html, body, #root, .root-inner {
   }
 }
 .sign-in-popup__sign-btn {
+  width: 70px;
+  margin: auto;
   margin-top: 10px;
+  padding: 5px;
+  border: 1px $light solid;
+  border-radius: 2px;
+  transition: 0.3s;
+  box-shadow:  0px 2px 2px 0px rgba(0, 0, 0, 0.5);
+  &:hover {
+    box-shadow: none;
+  }
+}
+.users__wrapper {
+  background: #FAFAFA;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.users__header {
+  height: 30px;
+  font: 18px $roboto;
+  line-height: 30px;
+  color: $light;
+  text-align: center;
+  background: $secondary;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+.users__close {
+  cursor: pointer;
+}
+.users__userlist {
+  width: 300px;
+  height: 500px;
+  max-height: 100%;
+}
+.users__item {
+  // width: 100%;
+  background: $primarylight;
+  border-radius: 10px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  margin-top: 5px;
+  cursor: pointer;
+  &:last-child {
+    margin-bottom: 5px;
+  }
+}
+.users__item_online {
+  background: $primary;
+
+}
+.users__name {
+  font: 16px $roboto;
+
+}
+.users__username {
+  font: 14px $roboto;
+
 }

@@ -1,22 +1,22 @@
 import {connect} from 'react-redux';
 import {setLoginStateAction} from '../actions';
-import MainSection from "../components/mainSection";
+import Header from "../components/header";
 
 const mapStateToProps = (state) => {
   return {
-    login: state.loginState
+    userId: state.userId
   }
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    setState: (id) => {
-      dispatch(setLoginStateAction(id))
+    logout: () => {
+      location.replace("/logout");
     }
   }
 }
-const mainSectionContainer = connect(
+const headerContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(MainSection);
+)(Header);
 
-export default mainSectionContainer
+export default headerContainer

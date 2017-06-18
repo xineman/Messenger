@@ -1,4 +1,5 @@
-export default class Header extends React.Component {
+import React from 'react';
+export default class Footer extends React.Component {
   constructor() {
     super();
   }

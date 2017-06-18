@@ -3,11 +3,11 @@ const path = require('path');
 
 const config = {
   entry: {
-    main: './app/js/index.js',
-    libs: ['react', 'react-dom', 'react-redux', 'redux']
+    main: './app/public/js/client.js',
+    libs: ['redux', 'react-redux', 'react', 'react-dom']
   },
   output: {
-    path: path.resolve(__dirname, 'app/js'),
+    path: path.resolve(__dirname, 'app/public/js'),
     publicPath: 'js/',
     filename: '[name].js'
   },
@@ -31,18 +31,18 @@ const config = {
     // 	}
     // }),
     // new webpack.optimize.UglifyJsPlugin()
-  ],
-  devServer: {
-    contentBase: path.join(__dirname, "app"),
-    // compress: true,
-    port: 3000,
-    watchContentBase: true
-    // watchOptions: {
-    //   // aggregateTimeout: 2000
-    //   ignored: [/scss/, /css/]
-    //
-    // }
-  }
+  ]
+  // devServer: {
+  //   contentBase: path.join(__dirname, "app/public"),
+  //   // compress: true,
+  //   port: 3000,
+  //   watchContentBase: true
+  //   // watchOptions: {
+  //   //   // aggregateTimeout: 2000
+  //   //   ignored: [/scss/, /css/]
+  //   //
+  //   // }
+  // }
 };
 
 module.exports = config;

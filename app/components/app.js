@@ -1,6 +1,7 @@
-import Header from "./header.js";
+import HeaderContainer from "../containers/headerContainer";
 import Footer from "./footer.js";
-import MainSection from "../containers/mainSectionContainer.js";
+import MainSectionContainer from "../containers/mainSectionContainer.js";
+import React from 'react';
 export default class App extends React.Component {
   constructor() {
     super();
@@ -9,8 +10,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="root-inner">
-        <Header />
-        <MainSection />
+        <HeaderContainer />
+        <MainSectionContainer />
         <Footer />
       </div>
     )

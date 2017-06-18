@@ -1,4 +1,5 @@
-const SignIn = (signInClick) => (
+import React from 'react';
+const SignIn = (props) => (
   <div className="popup sign-in-popup">
     <div className="sign-in-popup__wrapper container">
       <div className="sign-in-popup__header" >
@@ -13,7 +14,7 @@ const SignIn = (signInClick) => (
           <label htmlFor="username">Password:</label>
           <input id="password" className="sign-in-popup__password" type="password" />
         </div>
-        <p className="sign-in-popup__sign-btn btn" onClick={()=> signInClick()}>Sign In</p>
+        <p className="sign-in-popup__sign-btn btn" onClick={()=> props.signInClick()}>Sign In</p>
       </div>
     </div>
   </div>
