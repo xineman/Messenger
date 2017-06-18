@@ -3,7 +3,7 @@
 // import visibilityFilter from './visibilityFilter'
 
 const initialState = {
-  currentDialog: "string",
+  currentDialog: null,
   userId: 1, //userId==-1 means you are logged out
   webSocket: null,
   showUserList: false,

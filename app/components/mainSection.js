@@ -1,8 +1,7 @@
 import React from 'react';
 import Messages from "./messages";
 import SignInContainer from "../containers/signInContainer";
-import DialogsContainer from "../containers/dialogsContainer";
-import UsersContainer from "../containers/usersContainer";
+import LeftPanel from "../components/leftPanel";
 export default class MainSection extends React.Component {
   constructor(props) {
     super(props);
@@ -15,17 +14,18 @@ export default class MainSection extends React.Component {
     console.log("Did");
   }
   componentDidUpdate() {
-    // this.props.setupWebSocket();
     console.log("Updated");
   }
 
   render() {
     return (
       <main className="main container">
-        {this.props.userId!=-1 && <DialogsContainer dialogs={this.props.dialogs}/>}
-        {this.props.userId!=-1 && <Messages />}
-        {this.props.userId==-1 && <SignInContainer />}
-        {this.props.showUserList && <UsersContainer />}
+        {this.props.userId!=-1
+          && <LeftPanel showUsers={this.props.showUserList} />}
+        {this.props.userId!=-1
+          && <Messages currentDialog={this.props.currentDialog}/>}
+        {this.props.userId==-1
+          && <SignInContainer />}
       </main>
     );
   }

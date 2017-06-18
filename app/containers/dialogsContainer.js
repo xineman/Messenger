@@ -6,16 +6,17 @@ const mapStateToProps = (state) => {
   return {
     dialogs: state.dialogs,
     users: state.users,
-    userId: state.userId
+    userId: state.userId,
+    current: state.currentDialog
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    showUserList: (val) => {
-      dispatch(showUserList(val))
-    },
     getMessages: (id) => {
       dispatch(getDialog(id));
+    },
+    showUserList: (val) => {
+      dispatch(showUserList(val))
     }
   }
 }

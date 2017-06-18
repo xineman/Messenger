@@ -5,16 +5,15 @@ import {ajax} from "../utils";
 
 function signIn(dispatch) {
   let username = document.getElementById('username').value;
-  let pass = document.getElementById('password').value;
+  let password = document.getElementById('password').value;
   ajax("http://" + window.location.host + "/login", "POST", {
-    username: username,
-    password: pass
+    username,
+    password
   }).then((success) => {
     let message = JSON.parse(success);
     if (!message.error) {
       dispatch(setState(message));
       dispatch(setupWebSocket());
-      console.log("Yay! " + success);
     } else {
       dispatch(setUserId(-1));
       alert(message.error);

@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 var atob = require('atob');
 var btoa = require('btoa');
 var session = require('express-session');
+
 //Development
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpack = require("webpack");
@@ -17,9 +18,11 @@ import { Provider } from 'react-redux'
 import chatApp from './reducers'
 import App from './components/app'
 import model from './data'
+
 var connectedUsers = [];
 var app = express();
 var expressWs = require('express-ws')(app);
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: "/js" // Same as `output.publicPath` in most cases.
 }));
@@ -27,7 +30,6 @@ app.use(webpackDevMiddleware(compiler, {
 // app.use(session({ saveUninitialized: true, secret: 'hoolie chat', cookie: { maxAge: 60000 }}))
 app.use(cookieParser());
 app.use(bodyParser.json()); // for parsing application/json
-// app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(express.static('app/public'));;
 
 app.ws('/chat/', function(ws, req) {
@@ -44,7 +46,7 @@ app.ws('/chat/', function(ws, req) {
     let cc = expressWs.getWss().clients;
     broadcastMessage(
       connectedUsers.filter(connected => ~users.indexOf(connected.user.id)),
-      model.messages.filter(message => message.dialogId==data.dialog)
+      getMessagesForDialog(data.dialog)
     );
 
   });
@@ -62,11 +64,10 @@ app.ws('/chat/', function(ws, req) {
 });
 
 
-
 app.get('/', (req, res) => {
-  console.log('Cookies: ', req.cookies)
   let preloadedState = {}
   let user;
+  //TODO Use sessions instead of tokens
   // let sess = req.session;
   // if (sess.token) {
   //   user = findUserByToken(sess.token);
@@ -90,6 +91,7 @@ app.get('/', (req, res) => {
   res.send(renderFullPage(html, finalState));
 });
 
+//TODO Use sessions instead of tokens
 app.post("/login", (req, res) => {
   let user = validateUser(req.body.username, req.body.password);
   if (user){
@@ -100,6 +102,7 @@ app.post("/login", (req, res) => {
   } else
     res.send({error: "Wrong credentials"});
 });
+
 app.get("/logout", (req, res) => {
   res.cookie("token", "", {expires: new Date(0)});
   res.redirect("/");
@@ -107,16 +110,22 @@ app.get("/logout", (req, res) => {
 
 app.post("/dialog", (req, res) => {
   let userId = findUserByToken(req.cookies.token).id;
-  let dialogId = getDialog([req.body.id, userId]).id;
+  let users = [req.body.id, userId];
+  let dialogId = findDialogByUsers(users).id;
   res.send({
-    data: {...getDataObject(userId), messages:getMessagesForDialog(dialogId)},
+    data: getDataObject(userId, getMessagesForDialog(dialogId)),
     requested: dialogId})
+  broadcastMessage(
+    connectedUsers.filter(connected => ~users.indexOf(connected.user.id)),
+    getMessagesForDialog(dialogId)
+  );
 });
 
 app.listen(3000, function () {
   console.log("Listening on port 3000!");
 });
 
+//serverside rendering
 function renderFullPage(html, preloadedState) {
   return `
     <!DOCTYPE html>
@@ -145,16 +154,16 @@ function renderFullPage(html, preloadedState) {
   `
 }
 
-//stringify and send json to all connected clients
+//stringify and send json to connected clients and if needed include messages
 function broadcastMessage(connections, messages) {
   for (var client of connections) {
     client.socket.send(JSON.stringify(getDataObject(client.user.id, messages)));
   }
 }
 
-
+//create model individually for every user, and if needed include messages
 function getDataObject(userId, messages) {
-  return {
+  let response = {
     userId: userId,
     dialogs: model.dialogs.filter(dialog => ~dialog.users.indexOf(userId)),
     users: model.users.map(user =>({
@@ -165,9 +174,11 @@ function getDataObject(userId, messages) {
         let uid = connected.user.id;
         return uid==user.id
       })?true:false)
-    })),
-    messages: messages
+    }))
   }
+  if (messages)
+    response.messages = messages;
+  return response;
 }
 
 //returns messages array
@@ -176,27 +187,22 @@ function getMessagesForDialog(id) {
 }
 
 //find dialog for users or create if this doesn't exist
-function getDialog(users) {
-  console.log("Before");
-  console.log(users);
+function findDialogByUsers(users) {
   if (users[0]<users[1]){
     let user = users[0];
     users[0] = users[1];
     users[1] = user;
   }
-  console.log("After");
-  console.log(users);
   let id = btoa(users[0]+"+"+users[1]);
   let dialog = findDialogById(id);
   if (!dialog) {
-    console.log("Did't find");
     dialog = {users, id};
     model.dialogs.push(dialog);
   }
   return dialog;
 }
 
-//returns dialog
+//returns dialog by its id
 function findDialogById(number) {
   return model.dialogs.find(dialog => dialog.id==number);
 }
@@ -207,7 +213,7 @@ function findUserByToken(token) {
   return validateUser(data[0], data[1]);
 }
 
-//returns user object
+//returns user object or undefined if was not found
 function validateUser(login, password) {
   return model.users.find((user) => user.username==login&&user.password==password);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import MessagesContainer from "../containers/messagesContainer";
 import MessageInput from "../containers/messageInput";
+import MessagesPlaceholder from "../components/messagesPlaceholder";
 export default class Messages extends React.Component {
   constructor() {
     super();
@@ -9,8 +10,9 @@ export default class Messages extends React.Component {
   render() {
     return(
       <section className="messages">
-        <MessagesContainer />
-        <MessageInput />
+        {!this.props.currentDialog && <MessagesPlaceholder />}
+        {this.props.currentDialog && <MessagesContainer />}
+        {this.props.currentDialog && <MessageInput />}
       </section>
     );
   }

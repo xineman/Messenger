@@ -6,8 +6,8 @@ const mapStateToProps = (state) => {
   return {
     showUserList: state.showUserList,
     userId: state.userId,
-    dialogs: state.dialogs,
-    // webSocket: state.webSocket
+    // dialogs: state.dialogs,
+    currentDialog: state.currentDialog
   }
 }
 const mapDispatchToProps = (dispatch) => {

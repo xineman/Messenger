@@ -10,10 +10,10 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    showUserList: (e) => {
-      if (e.target.classList.contains("popup")||e.target.classList.contains("users__close"))
-        dispatch(showUserList(false));
-    },
+    // showUserList: (e) => {
+    //   if (e.target.classList.contains("popup")||e.target.classList.contains("users__close"))
+    //     dispatch(showUserList(false));
+    // },
     startDialog: (id) => {
       dispatch(showUserList(false));
       ajax("http://" + window.location.host + "/dialog", "POST", {

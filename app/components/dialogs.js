@@ -10,7 +10,7 @@ export default class Dialogs extends React.Component {
       let to = dialog.users[0]==this.props.userId?dialog.users[1]:dialog.users[0];
 
       dialogs.push(
-        <div key={dialog.id} className="dialogs__item" onClick={() => this.props.getMessages(dialog.id)}>
+        <div key={dialog.id} className={"dialogs__item " + (dialog.id==this.props.current && "dialogs__item_active")} onClick={() => this.props.getMessages(dialog.id)}>
           <li className="dialogs__item-header">
             <h3 className="dialogs__dialogname">{this.props.users.find((user)=>user.id==to).name}</h3>
             <p className="dialogs__time">19:30</p>
@@ -25,10 +25,11 @@ export default class Dialogs extends React.Component {
   render() {
     return(
       <ul className="dialogs">
-        <li className="dialogs__item dialogs__item_add" onClick={() => this.props.showUserList(true)}>
-          <p className="dialogs__new-message">New message +</p>
-        </li>
-        {this.props.dialogs && this.renderDialogs()}
+        {this.props.dialogs.length ? this.renderDialogs()
+          :(<li className="left-panel__tab left-panel__tab_new" onClick={() => this.props.showUserList(true)}>
+            <p className="left-panel__tab-text">New message +</p>
+          </li>)
+        }
       </ul>
     );
   }
