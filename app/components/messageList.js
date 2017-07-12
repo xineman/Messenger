@@ -1,4 +1,5 @@
 import React from 'react';
+import dateFormat from 'dateformat';
 export default class MessageList extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +17,7 @@ export default class MessageList extends React.Component {
       list.push(
         <li key={message.id} className={"messages__item-wrapper "+(this.props.userId==message.sender ? "messages__item-wrapper_my":" ")}>
           <div className={"messages__item "+(this.props.userId==message.sender &&"messages__item_my")}>{message.text}
-            <span className="messages__item-time">{message.time}</span>
+            <span className="messages__item-time">{dateFormat(message.time,"H:MM")}</span>
           </div>
         </li>
       );

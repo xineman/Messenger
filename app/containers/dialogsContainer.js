@@ -7,7 +7,8 @@ const mapStateToProps = (state) => {
     dialogs: state.dialogs,
     users: state.users,
     userId: state.userId,
-    current: state.currentDialog
+    current: state.currentDialog,
+    messages: state.messages
   }
 }
 const mapDispatchToProps = (dispatch, ownProps) => {

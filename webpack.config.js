@@ -4,7 +4,7 @@ const path = require('path');
 const config = {
   entry: {
     main: './app/public/js/client.js',
-    libs: ['redux', 'react-redux', 'react', 'react-dom']
+    libs: ['redux', 'react-redux', 'react', 'react-dom', 'dateformat']
   },
   output: {
     path: path.resolve(__dirname, 'app/public/js'),

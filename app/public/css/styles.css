@@ -124,6 +124,8 @@ body,
   -webkit-flex: 0 0 auto;
   -ms-flex: 0 0 auto;
   flex: 0 0 auto;
+  overflow: hidden;
+  position: relative;
 }
 
 .left-panel__tabs {
@@ -201,8 +203,57 @@ body,
   font: 300 14px Roboto, sans-serif;
 }
 
+.dialogs-anim-enter {
+  position: absolute;
+  left: -webkit-calc(-100% - 5px);
+  left: calc(-100% - 5px);
+}
+
+.dialogs-anim-enter.dialogs-anim-enter-active {
+  left: 0;
+  -webkit-transition: .25s ease-out;
+  transition: .25s ease-out;
+}
+
+.dialogs-anim-leave {
+  position: absolute;
+  left: 0;
+}
+
+.dialogs-anim-leave.dialogs-anim-leave-active {
+  left: -100%;
+  -webkit-transition: .25s ease-out;
+  transition: .25s ease-out;
+}
+
+.users-anim-enter {
+  position: absolute;
+  left: -webkit-calc(100% + 5px);
+  left: calc(100% + 5px);
+}
+
+.users-anim-enter.users-anim-enter-active {
+  left: 0;
+  -webkit-transition: .25s ease-out;
+  transition: .25s ease-out;
+}
+
+.users-anim-leave {
+  position: absolute;
+  left: 0;
+}
+
+.users-anim-leave.users-anim-leave-active {
+  left: 100%;
+  -webkit-transition: .25s ease-out;
+  transition: .25s ease-out;
+}
+
 .dialogs {
   width: 100%;
+  height: -webkit-calc(100% - 42px);
+  height: calc(100% - 42px);
+  overflow-y: auto;
 }
 
 .dialogs__item {
@@ -342,7 +393,7 @@ body,
 }
 
 .messages__list {
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .messages__item {

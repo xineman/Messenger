@@ -1,4 +1,5 @@
 import React from 'react';
+import dateFormat from 'dateformat';
 export default class Dialogs extends React.Component {
   constructor(props) {
     super(props);
@@ -8,14 +9,19 @@ export default class Dialogs extends React.Component {
     let dialogs = [];
     for (let dialog of this.props.dialogs) {
       let to = dialog.users[0]==this.props.userId?dialog.users[1]:dialog.users[0];
-
+      let messages;
+      if (this.props.messages)
+        messages = this.props.messages.filter(message => message.dialogId == dialog.id);
+      let m;
+      if (messages && messages.length)
+        m = messages[messages.length-1];
       dialogs.push(
         <div key={dialog.id} className={"dialogs__item " + (dialog.id==this.props.current && "dialogs__item_active")} onClick={() => this.props.getMessages(dialog.id)}>
           <li className="dialogs__item-header">
             <h3 className="dialogs__dialogname">{this.props.users.find((user)=>user.id==to).name}</h3>
-            <p className="dialogs__time">19:30</p>
+            <p className="dialogs__time">{m?dateFormat(m.time,"H:MM"):""}</p>
           </li>
-          <p className="dialogs__message-preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <p className="dialogs__message-preview">{m?m.text:""}</p>
         </div>
       );
     }
@@ -30,6 +36,30 @@ export default class Dialogs extends React.Component {
             <p className="left-panel__tab-text">New message +</p>
           </li>)
         }
+        {/* <div className="dialogs__item ">
+          <li className="dialogs__item-header">
+            <p className="dialogs__time">19:30</p>
+          </li>
+          <p className="dialogs__message-preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div className="dialogs__item ">
+          <li className="dialogs__item-header">
+            <p className="dialogs__time">19:30</p>
+          </li>
+          <p className="dialogs__message-preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div className="dialogs__item ">
+          <li className="dialogs__item-header">
+            <p className="dialogs__time">19:30</p>
+          </li>
+          <p className="dialogs__message-preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div>
+        <div className="dialogs__item ">
+          <li className="dialogs__item-header">
+            <p className="dialogs__time">19:30</p>
+          </li>
+          <p className="dialogs__message-preview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        </div> */}
       </ul>
     );
   }

@@ -3,7 +3,8 @@ import Header from "../components/header";
 
 const mapStateToProps = (state) => {
   return {
-    userId: state.userId
+    userId: state.userId,
+    total: state.total
   }
 }
 const mapDispatchToProps = (dispatch) => {

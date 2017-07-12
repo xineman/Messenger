@@ -164,6 +164,7 @@ function broadcastMessage(connections, messages) {
 //create model individually for every user, and if needed include messages
 function getDataObject(userId, messages) {
   let response = {
+    total: connectedUsers.length,
     userId: userId,
     dialogs: model.dialogs.filter(dialog => ~dialog.users.indexOf(userId)),
     users: model.users.map(user =>({
